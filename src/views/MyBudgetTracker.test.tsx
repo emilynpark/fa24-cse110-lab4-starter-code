@@ -8,7 +8,7 @@ const renderWithContext = (children: ReactNode) => {
 };
 
 describe("Expense Creation", () => {
-  test("verifies that a new expense is correctly added to the expense list, and ensures that the total spent and remaining amount update accordingly", async () => {
+  test("verifies that a new expense is correctly added to the expense list, and ensures that the total spent and remaining amount are updated accordingly", async () => {
     renderWithContext(<MyBudgetTracker />);
 
     fireEvent.click(screen.getByTestId("update-budget-button"));
@@ -34,7 +34,7 @@ describe("Expense Creation", () => {
 });
 
 describe("Expense Deletion", () => {
-    test("confirms that an expense was successfully removed from the list, and ensures that the total spent and remaining amount update accordingly", () => {
+    test("confirms that an expense was successfully removed from the list, and ensures that the total spent and remaining amount are updated accordingly", () => {
         renderWithContext(<MyBudgetTracker />);
 
         fireEvent.click(screen.getByTestId("update-budget-button"));
@@ -90,17 +90,17 @@ describe("Budget Balance Verification", () => {
     fireEvent.click(screen.getByTestId("save-expense-button"));
 
     const totalExpenditure = expenseCost;
-    const expectedRemaining = initialBudget - totalExpenditure;
+    const remainingBalance = initialBudget - totalExpenditure;
 
     expect(screen.getByText(/spent so far:/i)).toHaveTextContent(`Spent so far: $${totalExpenditure}`);
-    expect(screen.getByText(/remaining:/i)).toHaveTextContent(`Remaining: $${expectedRemaining}`);
+    expect(screen.getByText(/remaining:/i)).toHaveTextContent(`Remaining: $${remainingBalance}`);
 
-    expect(initialBudget).toEqual(expectedRemaining + totalExpenditure);
+    expect(initialBudget).toEqual(remainingBalance + totalExpenditure);
   });
 });
 
 describe("Budget Update", () => {
-    test("checks if the budget is updated correctly", () => {
+    test("checks if the budget is updated correctly after it is edited", () => {
       renderWithContext(<MyBudgetTracker />);
 
       fireEvent.click(screen.getByTestId("update-budget-button"));
@@ -113,7 +113,7 @@ describe("Budget Update", () => {
       fireEvent.click(screen.getByTestId("update-budget-button"));
       fireEvent.change(screen.getByTestId("budget-textbox"), { target: { value: 1100 } });
       fireEvent.click(screen.getByTestId("save-budget-button"));
-      
+
       expect(budgetLabel).toHaveTextContent("Budget: $1100");
     });
 });  
