@@ -23,7 +23,7 @@ describe("Expense Creation", () => {
     fireEvent.click(screen.getByTestId("save-expense-button"));
 
     expect(screen.getByText("Computer")).toBeInTheDocument();
-    expect(screen.getByText("$1300")).toBeInTheDocument();
+    expect(screen.getByText("$1000")).toBeInTheDocument();
 
     const totalSpent = screen.getByText(/spent so far:/i);
     expect(totalSpent).toHaveTextContent("Spent so far: $1000");
