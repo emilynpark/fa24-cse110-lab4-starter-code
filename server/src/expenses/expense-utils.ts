@@ -16,7 +16,6 @@ export async function createExpenseServer(req: Request, res: Response, db: Datab
         res.status(201).send({ id, description, cost });
  
     } catch (error) {
- 
         return res.status(400).send({ error: `Expense could not be created, + ${error}` });
     };
  
