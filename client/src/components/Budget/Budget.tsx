@@ -45,9 +45,10 @@ const Budget = () => {
               type="number"
               className="form-control me-2"
               value={budgetInput}
+              data-testid="budget-textbox"
               onChange={(e) => setBudgetInput(e.target.value)}
             />
-            <button type="submit" className="btn btn-primary" onClick={handleSave}>
+            <button type="submit" className="btn btn-primary" data-testid="save" onClick={handleSave}>
               Save
             </button>
             <button className="btn btn-light" onClick={() => setIsEditing(false)}>
@@ -58,7 +59,7 @@ const Budget = () => {
         ) : (
           <>
             <div data-testid="budget-label">Budget: ${budget}</div>
-            <button className="btn btn-secondary" onClick={() => {setIsEditing(true);}}>
+            <button className="btn btn-secondary" data-testid="edit" onClick={() => {setIsEditing(true);}}>
               Edit
             </button>
           </>

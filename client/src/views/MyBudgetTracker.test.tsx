@@ -116,4 +116,4 @@ describe("Budget Update", () => {
 
       expect(budgetLabel).toHaveTextContent("Budget: $1100");
     });
-});  
+});
