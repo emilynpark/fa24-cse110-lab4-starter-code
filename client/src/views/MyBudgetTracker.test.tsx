@@ -10,19 +10,23 @@ const renderWithContext = (children: ReactNode) => {
 describe("Expense Creation", () => {
   test("verifies that a new expense is correctly added to the expense list, and ensures that the total spent and remaining amount are updated accordingly", async () => {
     renderWithContext(<MyBudgetTracker />);
+
+    fireEvent.click(screen.getByTestId("update-budget-button"));
+    fireEvent.change(screen.getByTestId("budget-textbox"), { target: { value: 1200 } });
+    fireEvent.click(screen.getByTestId("save-budget-button"));
   
-    const descriptionInput = screen.getByLabelText(/description/i);
+    const nameInput = screen.getByLabelText(/name/i);
     const costInput = screen.getByLabelText(/cost/i);
 
-    fireEvent.change(descriptionInput, { target: { value: "Computer" } });
-    fireEvent.change(costInput, { target: { value: 800 } });
+    fireEvent.change(nameInput, { target: { value: "Computer" } });
+    fireEvent.change(costInput, { target: { value: 1000 } });
     fireEvent.click(screen.getByTestId("save-expense-button"));
 
     expect(screen.getByText("Computer")).toBeInTheDocument();
-    expect(screen.getByText("$800")).toBeInTheDocument();
+    expect(screen.getByText("$1000")).toBeInTheDocument();
 
     const totalSpent = screen.getByText(/spent so far:/i);
-    expect(totalSpent).toHaveTextContent("Spent so far: $800");
+    expect(totalSpent).toHaveTextContent("Spent so far: $1000");
 
     const remainingBudget = screen.getByText(/remaining:/i);
     expect(remainingBudget).toHaveTextContent("Remaining: $200");
@@ -33,10 +37,14 @@ describe("Expense Deletion", () => {
     test("confirms that an expense was successfully removed from the list, and ensures that the total spent and remaining amount are updated accordingly", () => {
         renderWithContext(<MyBudgetTracker />);
 
-        const descriptionInput = screen.getByLabelText(/description/i);
+        fireEvent.click(screen.getByTestId("update-budget-button"));
+        fireEvent.change(screen.getByTestId("budget-textbox"), { target: { value: 600 } });
+        fireEvent.click(screen.getByTestId("save-budget-button"));
+
+        const nameInput = screen.getByLabelText(/name/i);
         const costInput = screen.getByLabelText(/cost/i);
 
-        fireEvent.change(descriptionInput, { target: { value: "Utilities" } });
+        fireEvent.change(nameInput, { target: { value: "Utilities" } });
         fireEvent.change(costInput, { target: { value: 200 } });
         fireEvent.click(screen.getByTestId("save-expense-button"));
 
@@ -47,7 +55,7 @@ describe("Expense Deletion", () => {
         expect(totalSpent).toHaveTextContent("Spent so far: $200");
 
         const remainingBudget = screen.getByText(/remaining:/i);
-        expect(remainingBudget).toHaveTextContent("Remaining: $800");
+        expect(remainingBudget).toHaveTextContent("Remaining: $400");
 
         const deleteButton = screen.getByTestId("delete-expense-button");
         fireEvent.click(deleteButton);
@@ -108,4 +116,4 @@ describe("Budget Update", () => {
 
       expect(budgetLabel).toHaveTextContent("Budget: $1100");
     });
-});  
+});

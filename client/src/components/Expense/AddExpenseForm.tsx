@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import { Expense } from "../../types/types";
-import { createExpense } from "../../../src/utils/expense-utils"
+import { createExpense } from "../../../src/utils/expense-utils";
+import { v4 as uuidv4 } from "uuid";
 
 const AddExpenseForm = () => {
   const { expenses, setExpenses } = useContext(AppContext);
@@ -9,12 +10,10 @@ const AddExpenseForm = () => {
   const [description, setDescription] = useState<string>("");
   const [cost, setCost] = useState<number>(0);
 
-  let idCounter = 0;
-
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const newExpense: Expense = { id: `expense-${idCounter++}`, description, cost };
+    const newExpense: Expense = { id: uuidv4(), description, cost };
 
     createExpense(newExpense);
     setExpenses([...expenses, newExpense]);
